@@ -1,0 +1,30 @@
+.jigsaw {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch;
+    min-height: 300px;
+
+    .container {
+        flex-basis: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+
+        &.solution {
+            border: 1px solid black;
+        }
+        &.pieces {
+            gap: 1rem;
+        }
+    }
+
+    .piece {
+        border: 1px solid black;
+        display: grid;
+        place-items: center;
+
+        &.placed {
+            background-color: green;
+        }
+    }
+}
