@@ -1,12 +1,13 @@
+import "@interactjs/auto-start";
+import "@interactjs/actions/drag";
+import "@interactjs/actions/drop";
+import "@interactjs/dev-tools";
+import interact from "@interactjs/interact";
 import jigsaw from "./components/jigsaw";
-import interact from "interactjs";
 
 jigsaw.render();
 
 interact("[data-draggable]").draggable({
-    // enable inertial throwing
-    inertia: true,
-
     // enable autoScroll
     autoScroll: true,
 

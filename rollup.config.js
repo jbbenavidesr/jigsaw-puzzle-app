@@ -1,5 +1,6 @@
 // Plugins
 import { terser } from "rollup-plugin-terser";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import pkg from "./package.json";
 
 // Configs
@@ -72,6 +73,7 @@ var createExport = function (file) {
         return {
             input: `${configs.pathIn}/${file}`,
             output: createOutputs(filename),
+            plugins: [nodeResolve()],
         };
     });
 };
