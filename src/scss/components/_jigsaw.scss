@@ -2,7 +2,7 @@
     display: flex;
     gap: 2rem;
     align-items: stretch;
-    min-height: 300px;
+    min-height: calc(100vh - 15rem);
 
     .container {
         flex-basis: 100%;
@@ -13,17 +13,33 @@
         &.solution {
             border: 1px solid black;
         }
+
         &.pieces {
             gap: 1rem;
+
+            .piece {
+                display: grid;
+                place-items: center;
+            }
         }
     }
 
     .piece {
-        border: 1px solid black;
-        display: grid;
-        place-items: center;
+        position: relative;
 
-        &.placed {
+        &::after {
+            content: attr(data-id);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 2px 0 #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        &.placed::after {
             background-color: green;
         }
     }

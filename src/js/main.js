@@ -8,38 +8,48 @@ import Reef from "reefjs";
 //
 // Variables
 //
-let jigsaw = new Reef("#jigsaw", {
-    data: {
-        placed: [],
-    },
-    template,
-});
+const numberOfPieces = 16;
 
+/** 
+ * 
+ * 
+ * m 10 40 C 10 40 45 25 47 35 
+ *         C 47 35 50 40 48 45 
+ *         C 48 45 30 60 60 60 
+ *         C 60 60 90 60 72 45 
+ *         C 72 45 70 40 73 35 
+ *         C 73 35 75 25 110 40 
+ */
 //
 // Methods
 //
 
-function template(props) {
-    let numPieces = 16;
-    let placedContainer = [];
+function getPuzzleState(props) {
+    let puzzleState = [];
 
-    for (let i = 0; i < numPieces; i++) {
-        placedContainer.push(props.placed.includes(i) ? 1 : 0);
+    for (let i = 0; i < numberOfPieces; i++) {
+        puzzleState.push(props.placedPieces.includes(i) ? 1 : 0);
     }
+
+    return puzzleState;
+}
+
+function getJigsaw(props) {
+    let puzzleState = getPuzzleState(props);
 
     return `
         <div class="jigsaw">
             <div class="container solution">
-                ${placedContainer
+                ${puzzleState
                     .map(function (piece, index) {
                         return `<div class="piece ${
                             piece === 1 ? "placed" : ""
-                        }" data-dropzone data-id="${index}">${index}</div>`;
+                        }" data-dropzone data-id="${index}"></div>`;
                     })
                     .join("")}
             </div>
             <div class="container pieces">
-                ${placedContainer
+                ${puzzleState
                     .map(function (piece, index) {
                         let content = "";
                         if (piece === 0) {
@@ -67,11 +77,17 @@ function dragMoveListener(event) {
     target.setAttribute("data-y", y);
 }
 
+const app = new Reef('#app', {
+    data: {
+        placedPieces: [],
+    },
+    template: getJigsaw,
+})
+
 //
 // Inits & Event Listeners
 //
 
-jigsaw.render();
 
 interact("[data-draggable]").draggable({
     // enable autoScroll
@@ -94,7 +110,7 @@ interact("[data-dropzone]").dropzone({
         let piece = event.relatedTarget;
 
         if (piece.id === target.getAttribute("data-id")) {
-            jigsaw.data.placed.push(parseInt(piece.id));
+            app.data.placedPieces.push(parseInt(piece.id));
             console.log(`place ${piece.id}`);
         } else {
             piece.style.transform = "none";
@@ -104,3 +120,5 @@ interact("[data-dropzone]").dropzone({
         }
     },
 });
+
+app.render();
