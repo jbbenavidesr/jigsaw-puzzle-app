@@ -67,14 +67,14 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
         63, 5, 65, 15, 100, 0
     ];
 
-    let xRatio = 0.8 * width / 100;
-    let yRatio = 0.8 * height / 100;
+    let xRatio = 0.6 * width / 100;
+    let yRatio = 0.6 * height / 100;
 
     let mask = "";
 
     let topLeftCorner = {
-        x: 0.1 * width,
-        y: 0.1 * height
+        x: 0.2 * width,
+        y: 0.2 * height
     }
 
     mask += `M ${topLeftCorner.x} ${topLeftCorner.y}`;
@@ -87,13 +87,13 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
         }
 
         let p2 = {
-            x: topLeftCorner.x + curvyCoords[1 * 6 + 2] * xRatio,
-            y: topLeftCorner.y + topTab * curvyCoords[1 * 6 + 3] * yRatio,
+            x: topLeftCorner.x + curvyCoords[i * 6 + 2] * xRatio,
+            y: topLeftCorner.y + topTab * curvyCoords[i * 6 + 3] * yRatio,
         }
 
         let p3 = {
-            x: topLeftCorner.x + curvyCoords[1 * 6 + 4] * xRatio,
-            y: topLeftCorner.y + topTab * curvyCoords[1 * 6 + 5] * yRatio,
+            x: topLeftCorner.x + curvyCoords[i * 6 + 4] * xRatio,
+            y: topLeftCorner.y + topTab * curvyCoords[i * 6 + 5] * yRatio,
         }
 
         mask += ` C ${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y}`;
@@ -101,9 +101,10 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
 
     // Right
     let topRightCorner = {
-        x: topLeftCorner.x + 0.8 * width,
+        x: topLeftCorner.x + 0.6 * width,
         y: topLeftCorner.y,
     }
+
 
     for (let i = 0; i < curvyCoords.length / 6; i++) {
         let p1 = {
@@ -112,13 +113,13 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
         }
 
         let p2 = {
-            x: topRightCorner.x - rightTab * curvyCoords[1 * 6 + 3] * xRatio,
-            y: topRightCorner.y + curvyCoords[1 * 6 + 2] * yRatio,
+            x: topRightCorner.x - rightTab * curvyCoords[i * 6 + 3] * xRatio,
+            y: topRightCorner.y + curvyCoords[i * 6 + 2] * yRatio,
         }
 
         let p3 = {
-            x: topRightCorner.x - rightTab * curvyCoords[1 * 6 + 5] * xRatio,
-            y: topRightCorner.y + curvyCoords[1 * 6 + 4] * yRatio,
+            x: topRightCorner.x - rightTab * curvyCoords[i * 6 + 5] * xRatio,
+            y: topRightCorner.y + curvyCoords[i * 6 + 4] * yRatio,
         }
 
         mask += ` C ${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y}`;
@@ -127,8 +128,9 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
     // Bottom 
     let bottomRightCorner = {
         x: topRightCorner.x,
-        y: topRightCorner.y + 0.8 * height,
+        y: topRightCorner.y + 0.6 * height,
     }
+    mask += ` L ${bottomRightCorner.x} ${bottomRightCorner.y}`;
     for (let i = 0; i < curvyCoords.length / 6; i++) {
         let p1 = {
             x: bottomRightCorner.x - curvyCoords[i * 6 + 0] * xRatio,
@@ -136,13 +138,13 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
         }
 
         let p2 = {
-            x: bottomRightCorner.x - curvyCoords[1 * 6 + 2] * xRatio,
-            y: bottomRightCorner.y - bottomTab * curvyCoords[1 * 6 + 3] * yRatio,
+            x: bottomRightCorner.x - curvyCoords[i * 6 + 2] * xRatio,
+            y: bottomRightCorner.y - bottomTab * curvyCoords[i * 6 + 3] * yRatio,
         }
 
         let p3 = {
-            x: bottomRightCorner.x - curvyCoords[1 * 6 + 4] * xRatio,
-            y: bottomRightCorner.y - bottomTab * curvyCoords[1 * 6 + 5] * yRatio,
+            x: bottomRightCorner.x - curvyCoords[i * 6 + 4] * xRatio,
+            y: bottomRightCorner.y - bottomTab * curvyCoords[i * 6 + 5] * yRatio,
         }
 
         mask += ` C ${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y}`;
@@ -151,7 +153,7 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
     // Left
     let bottomLeftCorner = {
         x: topLeftCorner.x,
-        y: topLeftCorner.y + 0.8 * height,
+        y: topLeftCorner.y + 0.6 * height,
     }
 
     for (let i = 0; i < curvyCoords.length / 6; i++) {
@@ -161,19 +163,19 @@ function getPieceMask(topTab, rightTab, bottomTab, leftTab, width, height) {
         }
 
         let p2 = {
-            x: bottomLeftCorner.x + leftTab * curvyCoords[1 * 6 + 3] * xRatio,
-            y: bottomLeftCorner.y - curvyCoords[1 * 6 + 2] * yRatio,
+            x: bottomLeftCorner.x + leftTab * curvyCoords[i * 6 + 3] * xRatio,
+            y: bottomLeftCorner.y - curvyCoords[i * 6 + 2] * yRatio,
         }
 
         let p3 = {
-            x: bottomLeftCorner.x + leftTab * curvyCoords[1 * 6 + 5] * xRatio,
-            y: bottomLeftCorner.y - curvyCoords[1 * 6 + 4] * yRatio,
+            x: bottomLeftCorner.x + leftTab * curvyCoords[i * 6 + 5] * xRatio,
+            y: bottomLeftCorner.y - curvyCoords[i * 6 + 4] * yRatio,
         }
 
         mask += ` C ${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y}`;
     }
 
-
+    //
     return mask;
 }
 
@@ -190,7 +192,7 @@ function getPuzzleState(props) {
 function getJigsaw(props) {
     let puzzleState = getPuzzleState(props);
 
-    let mask = getPieceMask(1, -1, 1, 0, 150, 150)
+    let mask = getPieceMask(1, -1, 0, 1, 150, 150)
     console.log(mask)
     let missingPieces = puzzleState
         .map(function (piece, index) {
@@ -216,7 +218,7 @@ function getJigsaw(props) {
                     .join("")}
             </div>
             <div class="container pieces">
-                ${missingPieces.join("")}
+                ${shuffle(missingPieces).join("")}
             </div>
         </div>
     `;

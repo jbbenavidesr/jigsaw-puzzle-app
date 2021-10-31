@@ -20,12 +20,23 @@
             .piece {
                 display: grid;
                 place-items: center;
+                width: 150px;
+                height: 150px;
+
+                &::after {
+                    background-color: hsla(300, 52%, 65%, 0.6);
+                    transform: scale(1.66);
+                }
             }
         }
     }
 
     .piece {
         position: relative;
+
+        &[data-draggable] {
+            touch-action: none;
+        }
 
         &::after {
             content: attr(data-id);
