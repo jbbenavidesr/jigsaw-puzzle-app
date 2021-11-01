@@ -1,13 +1,17 @@
 // Plugins
-import { terser } from "rollup-plugin-terser";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
+import {
+    terser
+} from "rollup-plugin-terser";
+import {
+    nodeResolve
+} from "@rollup/plugin-node-resolve";
 import pkg from "./package.json";
 
 // Configs
 var configs = {
     name: "JigsawPuzzle",
     files: ["main.js"],
-    formats: ["iife", "es", "amd", "cjs"],
+    formats: ["iife"],
     default: "iife",
     pathIn: "src/js",
     pathOut: "dist/js",
