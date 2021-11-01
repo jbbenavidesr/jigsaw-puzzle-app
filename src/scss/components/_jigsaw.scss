@@ -12,6 +12,10 @@
 
         &.solution {
             border: 1px solid black;
+
+            .piece {
+                box-shadow: 1px 1px 5px 2px hsla(0, 0%, 0%, 0.6);
+            }
         }
 
         &.pieces {
@@ -20,8 +24,6 @@
             .piece {
                 display: grid;
                 place-items: center;
-                width: 150px;
-                height: 150px;
 
                 &::after {
                     background-color: hsla(300, 52%, 65%, 0.6);
@@ -42,7 +44,6 @@
             content: attr(data-id);
             display: grid;
             place-items: center;
-            background-color: rgba(255, 0, 0, 0.5);
             position: absolute;
             top: 0;
             left: 0;
