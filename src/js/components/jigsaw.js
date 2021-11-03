@@ -3,6 +3,7 @@ import Reef from "reefjs";
 import {
     getMask,
     getRandomShapes,
+    shuffle,
 } from "../helpers";
 
 //
@@ -43,17 +44,17 @@ function buildSolution(puzzleState, pieces) {
 }
 
 function buildMissingPieces(puzzleState, pieces) {
-    return puzzleState.map(function (piece, index) {
+    return shuffle(puzzleState.map(function (piece, index) {
         let content = "";
         if (piece === 0) {
             content = `
-                <div class="piece" data-draggable 
+                <div class="piece" draggable="true" 
                     id=${index} style="--path: path('${pieces[index].mask}')">
                         ${index}
                 </div>`;
         }
         return content;
-    }).join("");
+    })).join("");
 }
 
 /**
@@ -98,5 +99,36 @@ const app = new Reef('#app', {
 //
 // Inits and Event Listeners
 //
+
+document.addEventListener("dragstart", function (event) {
+    event.dataTransfer.setData("id", event.target.id);
+});
+
+document.addEventListener("dragover", function (event) {
+    event.preventDefault();
+
+    if (!event.target.closest('.solution .piece') || event.target.matches('.placed')) return;
+
+    event.target.classList.add("hover");
+});
+
+document.addEventListener("dragleave", function (event) {
+    if (!event.target.closest('.solution .piece') || event.target.matches('.placed')) return;
+    event.target.classList.remove("hover");
+});
+
+document.addEventListener("drop", function (event) {
+    if (!event.target.closest('.solution .piece') || event.target.matches('.placed')) return;
+
+    event.target.classList.remove("hover");
+
+    let id = event.dataTransfer.getData("id");
+
+    if (event.target.dataset.id === id) {
+        app.data.currentState[parseInt(id)] = 1;
+    }
+})
+
+
 
 export default app;
