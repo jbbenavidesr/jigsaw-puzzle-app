@@ -9,7 +9,11 @@
  * @return {String}         SVG path with the shape of the figure. 
  *  
  */
-function getMask(tabs, width, height) {
+function getMask(tabs, dimensions) {
+    const {
+        width,
+        height
+    } = dimensions;
 
 
     let curvyCoords = [
