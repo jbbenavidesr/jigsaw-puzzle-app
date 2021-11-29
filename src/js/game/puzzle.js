@@ -1,6 +1,6 @@
 import {
     getRandomShapes
-} from "../helpers";
+} from "../utils";
 import Piece from "./piece";
 
 /**

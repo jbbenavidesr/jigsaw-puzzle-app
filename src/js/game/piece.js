@@ -1,6 +1,6 @@
 import {
     getMask
-} from "../helpers";
+} from "../utils";
 
 /**
  * Piece of the puzzle.

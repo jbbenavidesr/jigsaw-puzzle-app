@@ -1,4 +1,4 @@
-import shuffle from "./shuffle";
+import shuffle from "../../utils/shuffle";
 
 /**
  * Create the shapes of the pieces.

@@ -1,10 +1,9 @@
 import Reef from "reefjs";
 
 import {
-    getMask,
     getRandomShapes,
     shuffle,
-} from "../helpers";
+} from "../utils";
 
 //
 // Variables
