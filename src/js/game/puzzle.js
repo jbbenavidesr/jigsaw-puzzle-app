@@ -1,6 +1,5 @@
-import {
-    getRandomShapes
-} from "../utils";
+import getRandomShapes from "./helpers/getRandomShapes";
+
 import Piece from "./piece";
 
 /**
@@ -14,6 +13,8 @@ function Puzzle(props) {
 
     this._piecesPerSide = Math.round(Math.sqrt(numberOfPieces));
     this._pieces = [];
+    this._image = new Image();
+    this._image.src = image;
     this.createPieces();
 
 }

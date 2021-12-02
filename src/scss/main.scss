@@ -1,8 +1,3 @@
-@use "base/reset";
-@use "base/root";
-@use "base/base";
-
-@use "utilities/wrapper";
-@use "utilities/bg";
-
-@use "components/jigsaw";
+@use "base";
+@use "utilities";
+@use "blocks";

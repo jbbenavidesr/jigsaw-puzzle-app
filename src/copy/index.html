@@ -10,16 +10,17 @@
 </head>
 
 <body>
-    <header class="bg-muted">
+    <header class="">
         <div class="wrapper">
             <h1>Jigsaw Puzzles</h1>
         </div>
     </header>
     <main>
         <div class="wrapper">
-            <div id="app" aria-live="polite">
-                Loading...
-            </div>
+            <section data-app="game" class="game">
+                <div data-game="puzzle" class="puzzle"></div>
+                <div data-game="pieces" class="pieces"></div>
+            </section>
         </div>
     </main>
     <script src="js/main.min.js"></script>
