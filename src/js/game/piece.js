@@ -1,20 +1,22 @@
-import getMask from "./helpers/getMask";
-
 /**
  * Piece of the puzzle.
  *
  * @param {Object} props    The properties of the piece.
  */
 function Piece(props) {
-    const { position, tabs, dimensions } = props;
+    const { position, tabs } = props;
 
     this.position = position;
-    this.shape = getMask(tabs, dimensions);
+    this.tabs = tabs;
     this.isPlaced = false;
 }
 
 Piece.prototype.place = function () {
     this.isPlaced = true;
+};
+
+Piece.prototype.setElem = function (elem) {
+    this.elem = elem;
 };
 
 export default Piece;
