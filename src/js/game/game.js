@@ -4,6 +4,7 @@ import getMask from "./helpers/getMask";
 //
 // Variables
 //
+let game;
 const settings = {
     imageUrl: "/img/skyscrappers.jpg",
     numberOfPieces: 16,
@@ -46,7 +47,7 @@ function drawPiece(piece, dimensions) {
 
 function init(settings) {
     // Start game
-    let game = new Puzzle(settings);
+    game = new Puzzle(settings);
 
     // Render
     gameContainer.style.setProperty(
@@ -54,19 +55,46 @@ function init(settings) {
         `url("${settings.imageUrl}")`
     );
     gameContainer.style.setProperty("--pieces-per-side", game.piecesPerSide);
-    gameContainer.style.height = 100 * game.piecesPerSide + "px";
-
-    let pieceElements = game.pieces.map((piece) =>
-        drawPiece(piece, { width: 100, height: 100 })
-    );
-
-    pieceElements.forEach((elem) => {
-        piecesContainer.append(elem);
-    });
 }
 
 //
 // Event Listeners and inits
 //
+
+document.addEventListener("puzzle:image-loaded", (event) => {
+    let image = event.detail.image;
+
+    // Set sizes
+    let ratio = image.height / image.width;
+
+    let dimensions = {
+        width,
+        height: width * ratio,
+    };
+
+    gameContainer.style.height = dimensions.height + "px";
+
+    let pieceDimensions = {
+        width: dimensions.width / game.piecesPerSide,
+        height: dimensions.height / game.piecesPerSide,
+    };
+
+    gameContainer.style.setProperty(
+        "--offset-y",
+        `${pieceDimensions.height * 0.2}px`
+    );
+    gameContainer.style.setProperty(
+        "--offset-x",
+        `${pieceDimensions.width * 0.2}px`
+    );
+
+    let pieceElements = game.pieces.map((piece) =>
+        drawPiece(piece, pieceDimensions)
+    );
+
+    pieceElements.forEach((elem) => {
+        piecesContainer.append(elem);
+    });
+});
 
 init(settings);

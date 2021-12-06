@@ -1,6 +1,4 @@
 .game {
-    --offset: 1rem;
-
     display: flex;
     justify-content: space-between;
     gap: 2rem;
@@ -14,7 +12,7 @@
         grid-template-rows: repeat(var(--pieces-per-side), 1fr);
 
         &.pieces {
-            gap: calc(1.5 * var(--offset));
+            gap: calc(1.5 * var(--offset-y)) calc(1.5 * var(--offset-x));
         }
     }
 
@@ -24,10 +22,10 @@
         &::before {
             content: "";
             position: absolute;
-            top: calc(-1 * var(--offset));
-            left: calc(-1 * var(--offset));
-            bottom: calc(-1 * var(--offset));
-            right: calc(-1 * var(--offset));
+            top: calc(-1 * var(--offset-y));
+            left: calc(-1 * var(--offset-x));
+            bottom: calc(-1 * var(--offset-y));
+            right: calc(-1 * var(--offset-x));
             background-image: var(--puzzle-image);
             background-position: var(--bg-position-x) var(--bg-position-y);
             clip-path: var(--piece-shape);

@@ -1,4 +1,5 @@
 import getRandomShapes from "./helpers/getRandomShapes";
+import emitEvent from "../utils/emitEvent";
 
 import Piece from "./piece";
 
@@ -11,6 +12,11 @@ function Puzzle(props) {
     this.piecesPerSide = Math.round(Math.sqrt(numberOfPieces));
     this.pieces = [];
     this.image = new Image();
+    this.image.onload = function (e) {
+        emitEvent("puzzle:image-loaded", {
+            image: e.target,
+        });
+    };
     this.image.src = imageUrl;
     this.createPieces();
 }
