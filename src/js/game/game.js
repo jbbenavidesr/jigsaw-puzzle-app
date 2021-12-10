@@ -25,6 +25,7 @@ const { width } = puzzleContainer.getBoundingClientRect();
 function drawPiece(piece, dimensions, piecesPerSide) {
     let elem = document.createElement("div");
     elem.classList.add("piece");
+    elem.id = piece.position;
 
     const maskDimensions = {
         width: dimensions.width / 0.6,
@@ -44,6 +45,8 @@ function drawPiece(piece, dimensions, piecesPerSide) {
     elem.style.width = dimensions.width + "px";
     elem.style.height = dimensions.height + "px";
     elem.style.setProperty("--piece-shape", `path("${mask}")`);
+
+    elem.draggable = true;
 
     // Background positions
     elem.style.setProperty(
@@ -107,10 +110,38 @@ document.addEventListener("puzzle:image-loaded", (event) => {
 
     shuffle(pieceElements);
 
-    pieceElements.forEach((elem) => {
-        puzzleContainer.innerHTML += `<div class="placeholder"></div>`;
+    pieceElements.forEach((elem, i) => {
+        puzzleContainer.innerHTML += `<div class="placeholder" data-id="${i}"></div>`;
         piecesContainer.append(elem);
     });
+});
+
+document.addEventListener("dragstart", function (event) {
+    if (!event.target.matches(".piece")) return;
+    event.dataTransfer.setData("id", event.target.id);
+});
+
+document.addEventListener("dragover", function (event) {
+    event.preventDefault();
+    if (!event.target.matches(".placeholder")) return;
+    event.target.classList.add("hover");
+});
+
+document.addEventListener("dragleave", function (event) {
+    event.target.classList.remove("hover");
+});
+
+document.addEventListener("drop", function (event) {
+    if (!event.target.matches(".placeholder")) return;
+
+    let target = event.target;
+    let id = event.dataTransfer.getData("id");
+
+    target.classList.remove("hover");
+
+    if (target.dataset.id === id) {
+        target.appendChild(document.getElementById(id));
+    }
 });
 
 init(settings);

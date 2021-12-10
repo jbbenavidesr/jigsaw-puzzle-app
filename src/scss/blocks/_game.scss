@@ -25,6 +25,9 @@
         outline: 1px solid black;
     }
 
+    .hover {
+        background-color: var(--color-highlight);
+    }
     .piece {
         position: relative;
 
