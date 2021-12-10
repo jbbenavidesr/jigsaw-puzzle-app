@@ -1,5 +1,6 @@
 import Puzzle from "./puzzle";
 import getMask from "./helpers/getMask";
+import shuffle from "../utils/shuffle";
 
 //
 // Variables
@@ -21,25 +22,37 @@ const { width } = puzzleContainer.getBoundingClientRect();
 //
 // Methods
 //
-function drawPiece(piece, dimensions) {
+function drawPiece(piece, dimensions, piecesPerSide) {
     let elem = document.createElement("div");
     elem.classList.add("piece");
 
-    let mask = getMask(piece.tabs, dimensions);
+    const maskDimensions = {
+        width: dimensions.width / 0.6,
+        height: dimensions.height / 0.6,
+    };
+
+    const piecePosition = {
+        x: piece.position % piecesPerSide,
+        y: Math.floor(piece.position / piecesPerSide),
+    };
+
+    console.debug(piecePosition);
+
+    let mask = getMask(piece.tabs, maskDimensions);
 
     // Set properties
-    elem.style.width = dimensions.width;
-    elem.style.height = dimensions.height;
+    elem.style.width = dimensions.width + "px";
+    elem.style.height = dimensions.height + "px";
     elem.style.setProperty("--piece-shape", `path("${mask}")`);
 
     // Background positions
     elem.style.setProperty(
         "--bg-position-y",
-        `-${piece.position * dimensions.height}px`
+        `${(1 / 3 - piecePosition.y) * dimensions.height}px`
     );
     elem.style.setProperty(
         "--bg-position-x",
-        `-${piece.position * dimensions.width}px`
+        `${(1 / 3 - piecePosition.x) * dimensions.width}px`
     );
 
     return elem;
@@ -81,18 +94,21 @@ document.addEventListener("puzzle:image-loaded", (event) => {
 
     gameContainer.style.setProperty(
         "--offset-y",
-        `${pieceDimensions.height * 0.2}px`
+        `${pieceDimensions.height / 3}px`
     );
     gameContainer.style.setProperty(
         "--offset-x",
-        `${pieceDimensions.width * 0.2}px`
+        `${pieceDimensions.width / 3}px`
     );
 
     let pieceElements = game.pieces.map((piece) =>
-        drawPiece(piece, pieceDimensions)
+        drawPiece(piece, pieceDimensions, game.piecesPerSide)
     );
 
+    shuffle(pieceElements);
+
     pieceElements.forEach((elem) => {
+        puzzleContainer.innerHTML += `<div class="placeholder"></div>`;
         piecesContainer.append(elem);
     });
 });

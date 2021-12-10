@@ -1,19 +1,28 @@
 .game {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 2rem;
 
     .container {
-        outline: 1px solid black;
-        flex-basis: 100%;
+        flex-basis: 40%;
 
         display: grid;
         grid-template-columns: repeat(var(--pieces-per-side), 1fr);
         grid-template-rows: repeat(var(--pieces-per-side), 1fr);
 
         &.pieces {
-            gap: calc(1.5 * var(--offset-y)) calc(1.5 * var(--offset-x));
+            gap: var(--offset-y) var(--offset-x);
         }
+
+        &.puzzle {
+            flex-shrink: 0;
+            height: 100%;
+        }
+    }
+
+    .placeholder {
+        outline: 1px solid black;
     }
 
     .piece {
@@ -28,6 +37,7 @@
             right: calc(-1 * var(--offset-x));
             background-image: var(--puzzle-image);
             background-position: var(--bg-position-x) var(--bg-position-y);
+            background-size: calc(100% * var(--pieces-per-side));
             clip-path: var(--piece-shape);
         }
     }
