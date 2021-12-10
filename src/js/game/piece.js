@@ -4,11 +4,14 @@
  * @param {Object} props    The properties of the piece.
  */
 function Piece(props) {
-    const { position, tabs } = props;
+    const { position, tabs, isPlaced } = Object.assign(
+        { isPlaced: false },
+        props
+    );
 
     this.position = position;
     this.tabs = tabs;
-    this.isPlaced = false;
+    this.isPlaced = isPlaced;
 }
 
 Piece.prototype.place = function () {
