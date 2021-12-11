@@ -6,10 +6,16 @@ import Piece from "./piece";
 /**
  * The puzzle object
  */
-function Puzzle(settings, initial) {
+function Puzzle(settings) {
     const { numberOfPieces, imageUrl } = settings;
 
-    this.state = initial || [];
+    // Check if previous game stored
+    let initial = localStorage.getItem("puzzle:history");
+    if (initial) {
+        initial = JSON.parse(initial);
+    }
+
+    this.history = initial || [];
 
     this.piecesPerSide = Math.round(Math.sqrt(numberOfPieces));
     this.pieces = [];
@@ -26,25 +32,30 @@ function Puzzle(settings, initial) {
 Puzzle.prototype.createPieces = function () {
     let shapes = getRandomShapes(this.piecesPerSide);
     this.pieces = shapes.map((tabs, index) => {
-        let isPlaced = this.state[index] > 0;
-
         return new Piece({
             position: index,
             tabs,
-            isPlaced,
         });
+    });
+    this.history.forEach((position) => {
+        this.pieces[position].place();
     });
 };
 
 Puzzle.prototype.getCurrentState = function () {
-    this.state = this.pieces.map((piece) => {
+    return this.pieces.map((piece) => {
         return piece.isPlaced + 0;
     });
 };
 
-Puzzle.prototype.saveState = function () {
-    this.getCurrentState();
-    localStorage.setItem("puzzle:state", JSON.stringify(this.state));
+Puzzle.prototype.saveHistory = function () {
+    localStorage.setItem("puzzle:history", JSON.stringify(this.history));
+};
+
+Puzzle.prototype.placePiece = function (position) {
+    this.history.push(position);
+    this.pieces.find((piece) => piece.position === position).place();
+    this.saveHistory();
 };
 
 export default Puzzle;

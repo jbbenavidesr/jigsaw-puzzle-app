@@ -37,8 +37,6 @@ function drawPiece(piece, dimensions, piecesPerSide) {
         y: Math.floor(piece.position / piecesPerSide),
     };
 
-    console.debug(piecePosition);
-
     let mask = getMask(piece.tabs, maskDimensions);
 
     // Set properties
@@ -62,11 +60,8 @@ function drawPiece(piece, dimensions, piecesPerSide) {
 }
 
 function init(settings) {
-    // Check if previous game stored
-    let initial = JSON.parse(localStorage.getItem("puzzle:history"));
-
     // Start game
-    game = new Puzzle(settings, initial);
+    game = new Puzzle(settings);
 
     // Render
     gameContainer.style.setProperty(
@@ -164,9 +159,7 @@ document.addEventListener("drop", function (event) {
 
     if (target.dataset.id === id) {
         target.appendChild(document.getElementById(id));
-        game.pieces[parseInt(id)].place();
-
-        game.saveState();
+        game.placePiece(parseInt(id));
     }
 });
 
