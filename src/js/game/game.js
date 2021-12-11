@@ -63,7 +63,7 @@ function drawPiece(piece, dimensions, piecesPerSide) {
 
 function init(settings) {
     // Check if previous game stored
-    let initial = JSON.parse(localStorage.getItem("puzzle:state"));
+    let initial = JSON.parse(localStorage.getItem("puzzle:history"));
 
     // Start game
     game = new Puzzle(settings, initial);
@@ -120,13 +120,22 @@ document.addEventListener("puzzle:image-loaded", (event) => {
 
         let id = parseInt(elem.id);
 
-        if (game.pieces[id].isPlaced) {
-            placeholder.append(elem);
-        } else {
+        if (!game.pieces[id].isPlaced) {
             piecesContainer.append(elem);
         }
 
         puzzleContainer.append(placeholder);
+    });
+
+    game.pieces.forEach((piece) => {
+        let id = parseInt(piece.position);
+        if (piece.isPlaced) {
+            let placeholder = document.querySelector(`[data-id="${id}"]`);
+            let pieceElement = pieceElements.find(
+                (el) => parseInt(el.id) === id
+            );
+            placeholder.append(pieceElement);
+        }
     });
 });
 
@@ -156,7 +165,7 @@ document.addEventListener("drop", function (event) {
     if (target.dataset.id === id) {
         target.appendChild(document.getElementById(id));
         game.pieces[parseInt(id)].place();
-        console.log(game.pieces[parseInt(id)]);
+
         game.saveState();
     }
 });
