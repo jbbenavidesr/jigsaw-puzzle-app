@@ -25,11 +25,6 @@
   "author": "Juan Bernardo Benavides",
   "license": "MIT",
   "dependencies": {
-    "@interactjs/actions": "^1.10.11",
-    "@interactjs/auto-start": "^1.10.11",
-    "@interactjs/dev-tools": "^1.10.11",
-    "@interactjs/interact": "^1.10.11",
-    "reefjs": "^10.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",
