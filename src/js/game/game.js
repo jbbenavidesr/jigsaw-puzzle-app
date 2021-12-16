@@ -8,7 +8,7 @@ import shuffle from "../utils/shuffle";
 let game;
 const settings = {
     imageUrl: "/img/skyscrappers.jpg",
-    numberOfPieces: 16,
+    numberOfPieces: 100,
 };
 
 // elements
@@ -69,6 +69,18 @@ function init(settings) {
         `url("${settings.imageUrl}")`
     );
     gameContainer.style.setProperty("--pieces-per-side", game.piecesPerSide);
+}
+
+function handleWin() {
+    gameContainer.innerHTML = `
+        <div class="win">
+            <h2>Completed... You won!</h2>
+            <button class="btn" data-action="restart">Play Again</button>
+            <img src="${settings.imageUrl}" alt="Image of the puzzle that was completed" width="${width}" >
+        </div>
+    `;
+
+    localStorage.removeItem("puzzle:history");
 }
 
 //
@@ -160,6 +172,9 @@ document.addEventListener("drop", function (event) {
     if (target.dataset.id === id) {
         target.appendChild(document.getElementById(id));
         game.placePiece(parseInt(id));
+        if (game.history.length === settings.numberOfPieces) {
+            handleWin();
+        }
     }
 });
 
