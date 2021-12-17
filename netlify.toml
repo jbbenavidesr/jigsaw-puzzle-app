@@ -7,6 +7,6 @@
 
 [dev]
   framework = "#custom"
-  command = "npm run server"
+  command = "npm start"
   targetPort = 3000
   

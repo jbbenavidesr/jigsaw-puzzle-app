@@ -8,7 +8,7 @@ import shuffle from "../utils/shuffle";
 let game;
 const settings = {
     imageUrl: "/img/skyscrappers.jpg",
-    numberOfPieces: 100,
+    numberOfPieces: 16,
 };
 
 // elements
