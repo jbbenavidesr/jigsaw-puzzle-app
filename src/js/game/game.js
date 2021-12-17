@@ -81,6 +81,29 @@ function handleWin() {
     `;
 
     localStorage.removeItem("puzzle:history");
+
+    fetch("/.netlify/functions/connectionFauna", {
+        method: "POST",
+        body: JSON.stringify({
+            settings,
+            history: game.history,
+        }),
+        headers: {
+            "Content-type": "application/json",
+        },
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw response;
+        })
+        .then(function (data) {
+            console.log(data);
+        })
+        .catch(function (error) {
+            console.warn(error);
+        });
 }
 
 //
