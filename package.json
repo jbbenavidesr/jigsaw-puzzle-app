@@ -25,6 +25,7 @@
   "author": "Juan Bernardo Benavides",
   "license": "MIT",
   "dependencies": {
+    "faunadb": "^4.4.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.6",
