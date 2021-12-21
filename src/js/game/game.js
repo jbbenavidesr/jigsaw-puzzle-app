@@ -22,6 +22,15 @@ const { width } = puzzleContainer.getBoundingClientRect();
 //
 // Methods
 //
+
+/**
+ * Given a piece object, create the element that will represent it in the DOM
+ *
+ * @param {Piece} piece piece object
+ * @param {Object} dimensions Width and height in pixels of the piece
+ * @param {Number} piecesPerSide Number of pieces per side
+ * @returns
+ */
 function drawPiece(piece, dimensions, piecesPerSide) {
     let elem = document.createElement("div");
     elem.classList.add("piece");
@@ -59,6 +68,11 @@ function drawPiece(piece, dimensions, piecesPerSide) {
     return elem;
 }
 
+/**
+ * Start the game
+ *
+ * @param {Object} settings settings for the puzzle: Image and number of pieces.
+ */
 function init(settings) {
     // Start game
     game = new Puzzle(settings);
@@ -71,6 +85,12 @@ function init(settings) {
     gameContainer.style.setProperty("--pieces-per-side", game.piecesPerSide);
 }
 
+/**
+ * Handles what happens when the puzzle is complete.
+ * Renders a message, deletes local storage history and sends the sequence to
+ * the server which is what I will use for my investigation.
+ *
+ */
 function handleWin() {
     gameContainer.innerHTML = `
         <div class="win">
@@ -110,6 +130,10 @@ function handleWin() {
 // Event Listeners and inits
 //
 
+/**
+ * I need to be sure that the image is loaded for rendering dimensions and initializing
+ * the visual part.
+ */
 document.addEventListener("puzzle:image-loaded", (event) => {
     let image = event.detail.image;
 
@@ -169,21 +193,29 @@ document.addEventListener("puzzle:image-loaded", (event) => {
     });
 });
 
+/**
+ * All events related to Drag n Drop.
+ */
+
+// Store the piece id being dragged.
 document.addEventListener("dragstart", function (event) {
     if (!event.target.matches(".piece")) return;
     event.dataTransfer.setData("id", event.target.id);
 });
 
+// Show that it is hovering over a possible drop position.
 document.addEventListener("dragover", function (event) {
     event.preventDefault();
     if (!event.target.matches(".placeholder")) return;
     event.target.classList.add("hover");
 });
 
+// Remove the style cause its not hovering anymore.
 document.addEventListener("dragleave", function (event) {
     event.target.classList.remove("hover");
 });
 
+// Check if it was dropped in the correct place and if so, if the puzzle is complete.
 document.addEventListener("drop", function (event) {
     if (!event.target.matches(".placeholder")) return;
 
@@ -201,4 +233,5 @@ document.addEventListener("drop", function (event) {
     }
 });
 
+// Start the game.
 init(settings);
