@@ -21,23 +21,13 @@
         </header>
         <main>
             <div class="wrapper">
-                <form action="/play/">
-                    <label for="numberOfPieces"
-                        >Select the number of pieces of the puzzle</label
-                    >
-                    <select name="numberOfPieces" id="numberOfPieces">
-                        <option value="16">16</option>
-                        <option value="36">36</option>
-                        <option value="64">64</option>
-                        <option value="121">121</option>
-                        <option value="256">256</option>
-                        <option value="259">529</option>
-                        <option value="1024">1024</option>
-                    </select>
-                    <button class="btn" type="submit">Comenzar Juego</button>
-                </form>
+                <section data-app="game" class="game">
+                    <div data-game="puzzle" class="container puzzle"></div>
+                    <div data-game="pieces" class="container pieces"></div>
+                </section>
             </div>
         </main>
         <script src="js/main.min.js"></script>
+        <script src="js/game/game.min.js"></script>
     </body>
 </html>

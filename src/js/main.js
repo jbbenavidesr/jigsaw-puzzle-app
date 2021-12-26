@@ -1,1 +1,1 @@
-import "./game/game";
+console.log("Hello");
