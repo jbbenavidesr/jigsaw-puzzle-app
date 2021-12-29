@@ -6,7 +6,7 @@ import pkg from "./package.json";
 // Configs
 var configs = {
     name: "JigsawPuzzle",
-    files: ["main.js", "game/game.js"],
+    files: ["main.js"],
     formats: ["iife"],
     default: "iife",
     pathIn: "src/js",
