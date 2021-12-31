@@ -11,7 +11,7 @@ function photoTemplate(photo) {
 
     return `
         <label for="${id}" class="grid-third">
-            <input type="radio" value="${id}" name="image-select" id="${id}">
+            <input type="radio" value="${id}" name="imageId" id="${id}" required>
             <img src="${urls.thumb}" alt="${alt_description}">
         </label>`;
 }

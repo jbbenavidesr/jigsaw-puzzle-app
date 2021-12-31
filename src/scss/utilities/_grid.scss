@@ -14,7 +14,7 @@
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: 1fr auto;
-        gap: 1.4%;
+        gap: var(--spacing);
     }
 
     .row-gap-large {
