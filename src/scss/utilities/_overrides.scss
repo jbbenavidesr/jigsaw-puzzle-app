@@ -179,3 +179,17 @@
 .clearfix:after {
     clear: both;
 }
+
+.radio-image {
+    [type="radio"] {
+        @extend .visually-hidden;
+
+        + img {
+            cursor: pointer;
+        }
+
+        &:checked + img {
+            outline: 2px solid #f00;
+        }
+    }
+}

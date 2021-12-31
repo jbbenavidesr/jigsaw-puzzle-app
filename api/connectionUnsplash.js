@@ -6,7 +6,7 @@ const unsplashAccessKey = process.env.UNSPLASH_ACCESS_KEY;
 exports.handler = async function (event, context) {
     try {
         const response = await fetch(
-            `https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}&count=10`
+            `https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}&count=12`
         );
 
         if (!response.ok) throw new Error(response);

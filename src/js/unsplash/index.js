@@ -1,6 +1,25 @@
 //
+// Variables
+//
+const container = document.querySelector("[data-app='unsplash']");
+
+//
 // Functions
 //
+function photoTemplate(photo) {
+    const { id, alt_description, urls } = photo;
+
+    return `
+        <label for="${id}" class="grid-third">
+            <input type="radio" value="${id}" name="image-select" id="${id}">
+            <img src="${urls.thumb}" alt="${alt_description}">
+        </label>`;
+}
+
+function renderPhotos(photos) {
+    container.innerHTML = photos.map((photo) => photoTemplate(photo)).join("");
+}
+
 function getRandomPictures() {
     fetch("/.netlify/functions/connectionUnsplash")
         .then((response) => {
@@ -10,7 +29,7 @@ function getRandomPictures() {
             throw new Error(response);
         })
         .then((data) => {
-            console.log(data);
+            renderPhotos(data);
         })
         .catch((error) => {
             console.error(error);

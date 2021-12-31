@@ -17,7 +17,7 @@ const puzzleContainer = document.querySelector("[data-game='puzzle']");
 const piecesContainer = document.querySelector("[data-game='pieces']");
 
 // constants
-const { width } = puzzleContainer.getBoundingClientRect();
+const { width } = puzzleContainer?.getBoundingClientRect();
 
 //
 // Methods
@@ -234,4 +234,4 @@ document.addEventListener("drop", function (event) {
 });
 
 // Start the game.
-init(settings);
+// init(settings);
