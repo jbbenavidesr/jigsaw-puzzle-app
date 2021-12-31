@@ -7,12 +7,12 @@ const container = document.querySelector("[data-app='unsplash']");
 // Functions
 //
 function photoTemplate(photo) {
-    const { id, alt_description, urls } = photo;
+    const { id, description, urls } = photo;
 
     return `
         <label for="${id}" class="grid-third">
-            <input type="radio" value="${id}" name="imageId" id="${id}" required>
-            <img src="${urls.thumb}" alt="${alt_description}">
+            <input type="radio" value="${urls.raw}" name="imageUrl" id="${id}" required>
+            <img src="${urls.thumb}" alt="${description}">
         </label>`;
 }
 
@@ -39,4 +39,6 @@ function getRandomPictures() {
 //
 // Inits
 //
-getRandomPictures();
+if (container) {
+    getRandomPictures();
+}

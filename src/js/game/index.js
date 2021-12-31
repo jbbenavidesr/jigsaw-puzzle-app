@@ -6,10 +6,7 @@ import shuffle from "../utils/shuffle";
 // Variables
 //
 let game;
-const settings = {
-    imageUrl: "/img/skyscrappers.jpg",
-    numberOfPieces: 16,
-};
+let settings;
 
 // elements
 const gameContainer = document.querySelector("[data-app='game']");
@@ -22,6 +19,16 @@ const { width } = puzzleContainer?.getBoundingClientRect();
 //
 // Methods
 //
+
+function getSettings() {
+    let params = new URLSearchParams(window.location.search);
+
+    settings = {
+        numberOfPieces: +params.get("numberOfPieces"),
+        imageUrl: params.get("imageUrl") + `?q=75&w=${Math.round(width)}`,
+    };
+    console.log(settings);
+}
 
 /**
  * Given a piece object, create the element that will represent it in the DOM
@@ -95,7 +102,7 @@ function handleWin() {
     gameContainer.innerHTML = `
         <div class="win">
             <h2>Completed... You won!</h2>
-            <button class="btn" data-action="restart">Play Again</button>
+            <a class="btn" href="/">Play Again</a>
             <img src="${settings.imageUrl}" alt="Image of the puzzle that was completed" width="${width}" >
         </div>
     `;
@@ -141,8 +148,8 @@ document.addEventListener("puzzle:image-loaded", (event) => {
     let ratio = image.height / image.width;
 
     let dimensions = {
-        width,
-        height: width * ratio,
+        width: image.width,
+        height: image.height,
     };
 
     gameContainer.style.height = dimensions.height + "px";
@@ -234,4 +241,7 @@ document.addEventListener("drop", function (event) {
 });
 
 // Start the game.
-// init(settings);
+if (puzzleContainer) {
+    getSettings();
+    init(settings);
+}
