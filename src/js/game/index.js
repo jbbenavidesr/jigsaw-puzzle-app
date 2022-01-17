@@ -21,13 +21,22 @@ const { width } = puzzleContainer?.getBoundingClientRect();
 //
 
 function getSettings() {
+    let savedSettings = localStorage.getItem("puzzle:settings");
+
+    if (savedSettings) {
+        return JSON.parse(savedSettings);
+    }
+
     let params = new URLSearchParams(window.location.search);
 
-    settings = {
+    let settings = {
         numberOfPieces: +params.get("numberOfPieces"),
         imageUrl: params.get("imageUrl") + `?q=75&w=${Math.round(width)}`,
     };
-    console.log(settings);
+
+    localStorage.setItem("puzzle:settings", JSON.stringify(settings));
+
+    return settings;
 }
 
 /**
@@ -108,6 +117,7 @@ function handleWin() {
     `;
 
     localStorage.removeItem("puzzle:history");
+    localStorage.removeItem("puzzle:settings");
 
     fetch("/.netlify/functions/connectionFauna", {
         method: "POST",
@@ -143,9 +153,6 @@ function handleWin() {
  */
 document.addEventListener("puzzle:image-loaded", (event) => {
     let image = event.detail.image;
-
-    // Set sizes
-    let ratio = image.height / image.width;
 
     let dimensions = {
         width: image.width,
@@ -242,6 +249,6 @@ document.addEventListener("drop", function (event) {
 
 // Start the game.
 if (puzzleContainer) {
-    getSettings();
+    settings = getSettings();
     init(settings);
 }

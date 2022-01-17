@@ -3,10 +3,15 @@ const fetch = (...args) =>
 
 const unsplashAccessKey = process.env.UNSPLASH_ACCESS_KEY;
 
+const params = {
+    count: 12,
+    query: "landscape",
+};
+
 exports.handler = async function (event, context) {
     try {
         const response = await fetch(
-            `https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}&count=12`
+            `https://api.unsplash.com/photos/random?client_id=${unsplashAccessKey}&count=${params.count}&query=${params.query}`
         );
 
         if (!response.ok) throw new Error(response);

@@ -42,6 +42,11 @@
                 </form>
             </div>
         </main>
+        <script>
+            if (localStorage.getItem("puzzle:settings")) {
+                window.location.href = "/game/";
+            }
+        </script>
         <script src="/js/main.min.js"></script>
     </body>
 </html>
