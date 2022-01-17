@@ -188,10 +188,14 @@ document.addEventListener("puzzle:image-loaded", (event) => {
 
         let id = parseInt(elem.id);
 
+        let pieceContainer = document.createElement("div");
+        pieceContainer.classList.add("placeholder");
+
         if (!game.pieces[id].isPlaced) {
-            piecesContainer.append(elem);
+            pieceContainer.append(elem);
         }
 
+        piecesContainer.append(pieceContainer);
         puzzleContainer.append(placeholder);
     });
 
@@ -238,6 +242,11 @@ document.addEventListener("drop", function (event) {
 
     target.classList.remove("hover");
 
+    if (!target.dataset.id) {
+        let currentPiece = document.getElementById(id);
+        target.appendChild(currentPiece);
+    }
+
     if (target.dataset.id === id) {
         target.appendChild(document.getElementById(id));
         game.placePiece(parseInt(id));
@@ -245,6 +254,13 @@ document.addEventListener("drop", function (event) {
             handleWin();
         }
     }
+});
+
+document.addEventListener("contextmenu", function (event) {
+    if (!event.target.matches(".piece")) return;
+    event.preventDefault();
+    event.target.classList.toggle("big");
+    return false;
 });
 
 // Start the game.
