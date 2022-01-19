@@ -12,6 +12,7 @@ let settings;
 const gameContainer = document.querySelector("[data-app='game']");
 const puzzleContainer = document.querySelector("[data-game='puzzle']");
 const piecesContainer = document.querySelector("[data-game='pieces']");
+const imageContainer = document.querySelector("[data-app='image']");
 
 // constants
 const { width } = puzzleContainer?.getBoundingClientRect();
@@ -143,6 +144,13 @@ function handleWin() {
         });
 }
 
+const handlers = {
+    restart: function (event) {
+        localStorage.clear();
+        window.location.href = "/";
+    },
+};
+
 //
 // Event Listeners and inits
 //
@@ -153,6 +161,8 @@ function handleWin() {
  */
 document.addEventListener("puzzle:image-loaded", (event) => {
     let image = event.detail.image;
+
+    imageContainer.append(image);
 
     let dimensions = {
         width: image.width,
@@ -261,6 +271,14 @@ document.addEventListener("contextmenu", function (event) {
     event.preventDefault();
     event.target.classList.toggle("big");
     return false;
+});
+
+document.addEventListener("click", function (event) {
+    let action = event.target.getAttribute("data-action");
+
+    if (!action || !handlers[action]) return;
+
+    handlers[action](event);
 });
 
 // Start the game.
