@@ -169,7 +169,7 @@ document.addEventListener("puzzle:image-loaded", (event) => {
         height: image.height,
     };
 
-    gameContainer.style.height = dimensions.height + "px";
+    puzzleContainer.style.minHeight = dimensions.height + "px";
 
     let pieceDimensions = {
         width: dimensions.width / game.piecesPerSide,
